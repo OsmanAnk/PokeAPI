@@ -1,0 +1,350 @@
+.overlay {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(11, 54, 84, 0.3);
+    color: white;
+}
+
+.dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    background-color: white;
+    text-align: center;
+    height: 670px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainDialog {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background-color: #082029;
+    gap: 12px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.pkmnTitleDialog {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 8px;
+    background-color: #082029;
+}
+
+.pkmnNumberDialog {
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.pkmnNameDialog {
+    text-transform: capitalize;
+    margin: 0;
+    font-weight: bold;
+}
+
+.pkmnData {
+    width: 244px;
+}
+
+.dialogImgWrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 8px;
+}
+
+.dialogImg {
+    max-width: 100%;
+    max-height: 100%;
+    width: 90%;
+    object-fit: contain;
+}
+
+.infoButtons {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.btnDialog {
+    width: 34%;
+    border: none;
+    background-color: #316985;
+    color: white;
+    height: 36px;
+    border-radius: 6px;
+}
+
+.btnDialog:hover {
+    background-color: #4793b9;
+    cursor: pointer;
+}
+
+.btnDialog:active {
+    background-color: #4793b9;
+    box-shadow: 0 1px #666;
+    transform: translateY(1px);
+}
+
+.infoList {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: #4793b9;
+    border-radius: 8px;
+    padding: 8px;
+    height: 268px;
+    text-align: left;
+}
+
+.infoList>div {
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 4px;
+    width: 100px;
+}
+
+.additionalInfo {
+    display: flex;
+    gap: 12px;
+}
+
+.pkmnDataWrapper {
+    background-color: #082029;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.descriptionText {
+    font-size: 16px;
+    line-height: 1.4;
+    text-align: left;
+    margin: 0;
+}
+
+.arrowButtons {
+    background-color: #082029;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.arrowBtn {
+    background-color: #246281;
+    border-radius: 50%;
+    width: 36px;
+}
+
+.arrowBtn:hover {
+    cursor: pointer;
+    background-color: #297093;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+.baseStatBar {
+    flex: 1;
+    padding-right: 15px;
+    padding-top: 7px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.baseStats {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+
+    text-align: left;
+    padding-left: 8px;
+    background-color: #1d3a48;
+    height: 238px;
+    border-radius: 8px;
+
+}
+
+.baseStats p {
+    margin: 16px 0;
+    text-align: center;
+}
+
+.statRow {
+    background-color: gray;
+    width: 100%;
+    height: 18px;
+    margin-top: 8px;
+    border: 1px solid black;
+}
+
+.statGeneral {
+    width: 100%;
+    height: 18px;
+    background-color: #18556c;
+}
+
+.evoContent {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 40px;
+}
+
+.evoChain {
+    display: flex;
+    flex-direction: column;
+}
+
+.evoChain img {
+    width: 80px;
+    height: auto;
+}
+
+.evoChain p {
+    font-size: 14px;
+    text-align: center;
+}
+
+.arrowEvo {
+    width: 10px;
+    padding-bottom: 30px;
+}
+
+.typeDialog {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.typeDialog p {
+    padding: 6px 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #fff;
+    margin: 0;
+    min-width: 135px;
+    text-align: center;
+}
+
+.descriptionTextWrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.catchBreed {
+    display: flex;
+    flex-direction: column;
+    gap: 8px 0px;
+    font-size: 18px;
+    text-align: left;
+    margin-top: 8px;
+}
+
+.catchBreedContainer {
+    display: flex;
+    width: 100%;
+    height: 54px;
+    gap: 12px;
+    background-color: #1d3a48;
+    border-radius: 8px;
+    align-items: center;
+}
+
+.catchBreedLabel {
+    width: 50%;
+    padding-left: 6px;
+}
+
+.catchBreedValue {
+    width: 50%;
+    text-align: left;
+}
+
+@media (max-width: 600px) {
+    .dialog {
+        width: 90%;
+        height: 90%;
+        overflow-y: auto;
+    }
+
+    .infoList {
+        grid-template-columns: 1fr;
+        height: auto;
+    }
+
+    .additionalInfo {
+        flex-direction: column;
+    }
+
+    .baseStatBar {
+        padding-right: 0;
+        padding-top: 0;
+        margin-top: 8px;
+    }
+
+    .baseStats {
+        height: auto;
+    }
+
+    .pkmnDataWrapper {
+        flex-direction: column;
+        gap: 12px;
+        padding-top: 0;
+    }
+
+    .pkmnData {
+        width: 100%;
+    }
+
+    .statRow {
+        width: 90%;
+    }
+
+    .infoList {
+        grid-template-columns: 1fr 1fr;
+        gap: 3px;
+        width: 90%;
+        margin: 0 auto;
+        height: auto;
+    }
+
+    .infoList>div {
+        width: 100%;
+        align-items: center;
+        text-align: center;
+    }
+
+    .descriptionText {
+        text-align: center;
+    }
+
+
+}

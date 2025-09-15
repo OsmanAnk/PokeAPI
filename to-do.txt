@@ -1,0 +1,13 @@
+- kachel hinzu -> weitere pokemon laden -> DONE
+- nächstes/letztes pokemon anzeigen im dialog -> DONE
+- suche funktionsfähig machen -> DONE
+- evolution fertig machen -> DONE
+- ability separat -> DONE
+- loading-spinner hinzufügen -> DONE
+- overlay überarbeiten -> DONE
+- zucht, fangrate, zucht einfügen -> DONE
+- evolution bei 2 anpassen! -> DONE
+
+- responsive machen
+- code schlank machen
+- hovereffekt

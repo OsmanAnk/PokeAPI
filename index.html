@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon API</title>
+
+    <script src="script.js" defer></script>
+    <script src="scripts/template.js"></script>
+    <script src="scripts/remoteStorage.js"></script>
+
+    <link rel="shortcut icon" href="assets/img/pokemon_ball.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/assets.css">
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/standard.css">
+    <link rel="stylesheet" href="styles/colors.css">
+    <link rel="stylesheet" href="styles/dialog.css">
+</head>
+
+<body onload="render()">
+    <header>
+        <div class="headerContent">
+            <div class="logo">
+                <img src="assets/img/pokemon_ball.png" alt="pokeball">
+                <p>Pokédex</p>
+            </div>
+            <div class="searchWrapper">
+                <input type="text" id="searchInput" onkeyup="mySearchFunction()" placeholder="Search for Pokémon...">
+            </div>
+        </div>
+    </header>
+    <div class="loaderWrapper" id="loaderContent">
+        <div class="loaderBackground"></div>
+        <img class="loader" src="assets/img/pokemon_ball.png">
+    </div>
+    <main class="mainContent">
+        <div class="pkmnMain" id="pkmnMain" onclick=""></div>
+    </main>
+    <footer></footer>
+    <div id="overlay" class="overlay d_none" onclick="toggleOverlay()"></div>
+
+</body>
+
+<div class="row">
+    <div class="column">
+        <h2></h2>
+        <p></p>
+    </div>
+    <div class="column">
+        <h2></h2>
+        <p></p>
+    </div>
+</div>
+
+</html>
