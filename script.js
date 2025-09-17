@@ -1,11 +1,55 @@
-function capitalize(s) {
-    let cap = ""
-    if (s.length > 0) {
-        cap = String(s[0]).toUpperCase() + String(s).slice(1)
-    } else
-        cap = "";
-    return cap;
+async function render() {
+    showLoadingSpinner();
+    await getPokemon(offset, limit);
+    hideLoadingSpinner();
 }
+
+let offset = 1;
+let limit = 20;
+
+async function getPokemon(offset, limit) {
+    let pkmnMain = document.getElementById("pkmnMain");
+    let loadMore = document.getElementById("loadMore")
+    if (loadMore) {
+        loadMore.remove()
+    }
+    await getPokemonForResult(offset, limit, pkmnMain);
+
+    pkmnMain.innerHTML += getLoadMore(offset, limit)
+}
+
+async function getPokemonForResult(offset, limit, pkmnMain) {
+    for (let i = offset; i <= limit; i++) {
+        let responseToJson = await getURL(i);
+        let responseToJsonSpecies = await getEvoSpecies(i);
+
+        let description = responseToJsonSpecies.flavor_text_entries[0].flavor_text
+        let img = responseToJson.sprites.front_default;
+        let name = responseToJson.name;
+        let { type1, type2 } = pkmnTypes(responseToJson)
+        pkmnMain.innerHTML += loadPkmn(name, type1, type2, img, i, description);
+    }
+}
+
+function pkmnTypes(responseToJson) {
+    type1 = responseToJson.types[0].type.name;
+    if (responseToJson.types[1] !== undefined) {
+        type2 = responseToJson.types[1].type.name;
+    } else {
+        type2 = "";
+    }
+    return { type1, type2 };
+}
+
+function capitalize(capitalizeWord) {
+    let capitalize = "";
+    if (capitalizeWord.length > 0) {
+        capitalize = String(capitalizeWord[0]).toUpperCase() + String(capitalizeWord).slice(1);
+    } else
+        capitalize = "";
+    return capitalize;
+}
+
 
 function showPkmn(name, type1, type2, img, i, description) {
     let overlay = document.getElementById("overlay");
@@ -29,7 +73,7 @@ function eventBubbling(event) {
 
 function showType2(type2) {
     if (type2 != "") {
-        return type2Exist = `<p class="${type2}">${type2}</p>`
+        return `<p class="${type2}">${type2}</p>`
     } else {
         return "";
     }
@@ -68,7 +112,6 @@ function checkEggGroup2(responseToJson) {
 
 async function showBasestats(i) {
     let responseToJson = await getURL(i);
-
     let pkmnDataContent = document.getElementById("pkmnDataContent");
     pkmnDataContent.innerHTML = getBaseStats(responseToJson);
 }
@@ -83,7 +126,6 @@ function calcTotalStat(responseToJson) {
 
 async function showEvolution(i) {
     let responseToJson = await getEvoSpecies(i);
-
     let evoCheck = await checkEvo(responseToJson, i)
     let pkmnDataContent = document.getElementById("pkmnDataContent");
     pkmnDataContent.innerHTML = evoCheck;
@@ -130,13 +172,7 @@ function checkEvo2(evo2, img2) {
     if (evo2 === "") {
         return "";
     } else {
-        return `
-        <img class="arrowEvo" src="assets/img/arrow_evo.png">
-        <div class="evoChain">
-            <img src="${img2}">
-            <p>${evo2}</p>
-        </div>
-        `
+        return checkEvo2Tempalte(evo2, img2);
     }
 }
 
@@ -144,19 +180,13 @@ function checkEvo3(evo3, img3) {
     if (evo3 === "") {
         return "";
     } else {
-        return `
-        <img class="arrowEvo" src="assets/img/arrow_evo.png">
-        <div class="evoChain">
-            <img src="${img3}">
-            <p>${evo3}</p>
-        </div>
-        `
+        return checkEvo3Tempalte(evo3, img3);
     }
 }
 
 function loadType2(type2) {
     if (type2 != "") {
-        return type2Exist = `<img class="typeIcon" src="./assets/img/types/${type2}.svg" alt="${type2}">`
+        return loadType2Template(type2);
     }
     return "";
 }
@@ -172,7 +202,7 @@ async function showInfo(i) {
 async function loadMore(offset, limit) {
     showLoadingSpinner();
     offset = limit + 1;
-    limit = limit + 24;
+    limit = limit + 20;
     await getPokemon(offset, limit);
     hideLoadingSpinner();
 }
@@ -180,15 +210,15 @@ async function loadMore(offset, limit) {
 function nextPkmn(i) {
     i++;
     if (i > limit) {
-        i = 0;
+        return;
     }
     showOtherPkmn(i);
 }
 
 function previousPkmn(i) {
     i--;
-    if (i < 0) {
-        i = limit - 1;
+    if (i < 1) {
+        return;
     }
     showOtherPkmn(i);
 }
@@ -200,7 +230,7 @@ async function showOtherPkmn(i) {
     let description = responseToJsonSpecies.flavor_text_entries[0].flavor_text
     let img = responseToJson.sprites.front_default;
     let name = responseToJson.name;
-    let { type1, type2 } = await pkmnTypes(i)
+    let { type1, type2 } = pkmnTypes(responseToJson)
     getOtherPkmnOverlay(name, type1, type2, img, i, description)
 }
 
@@ -211,28 +241,16 @@ async function getOtherPkmnOverlay(name, type1, type2, img, i, description) {
     catchBreed(i);
 }
 
-async function pkmnTypes(i) {
-    let responseToJson = await getURL(i);
-    let type1 = "";
-    let type2 = "";
-
-    type1 = responseToJson.types[0].type.name;
-    if (responseToJson.types[1] !== undefined) {
-        type2 = responseToJson.types[1].type.name;
-    } else {
-        type2 = "";
-    }
-    return { type1, type2 };
-}
 
 function mySearchFunction() {
-    let input, filter, divs, a, i, txtValue
-    input = document.getElementById("searchInput");
-    filter = input.value.toUpperCase();
-    divs = document.getElementsByClassName("mainView");
-    let loadMore = document.querySelector(".loadMore")
+    let input = document.getElementById("searchInput");
+    let filter = input.value.toUpperCase();
+    let divs = document.getElementsByClassName("mainView");
+    let loadMore = document.querySelector(".loadMore");
 
-    getSearchResult(divs, filter, loadMore)
+    if (filter.length >= 3) {
+        getSearchResult(divs, filter);
+    } else { }
 
     if (filter.length > 0) {
         loadMore.style.display = "none";
@@ -241,15 +259,15 @@ function mySearchFunction() {
     }
 }
 
-function getSearchResult(divs, filter, loadMore) {
+function getSearchResult(divs, filter) {
     for (i = 0; i < divs.length; i++) {
 
         if (divs[i].classList.contains("loadMore")) {
             continue;
         }
 
-        a = divs[i].getElementsByTagName("a")[0];
-        txtValue = a.textContent || a.innerText;
+        let a = divs[i].getElementsByTagName("a")[0];
+        let txtValue = a.textContent || a.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             divs[i].style.display = "";
         } else {

@@ -18,6 +18,7 @@ function getDialog(name, type1, type2, img, i, description) {
                     <div class="pkmnTitleDialog">
                         <p class="pkmnNameDialog">${name}</p>
                         <p class="pkmnNumberDialog">#${i}</p>
+                        <p class="closeBtn d_none" onclick="toggleOverlay()">X</p>
                     </div>
                     <div class="mainDialog">
                             <div class="additionalInfo">
@@ -156,4 +157,35 @@ function getEvo(evo1, img1, evo2, img2, evo3, img3) {
             ${checkEvo2(evo3, img3)}
         </div>
         `
+}
+
+function getLoadMore(offset, limit) {
+    return `<div class="mainView loadMore" id="loadMore" onclick="loadMore(${offset}, ${limit})">
+        <p> more... </p>
+    </div>
+    `
+}
+
+function checkEvo2Tempalte(evo2, img2) {
+    return `
+        <img class="arrowEvo" src="assets/img/arrow_evo.png">
+        <div class="evoChain">
+            <img src="${img2}">
+            <p>${evo2}</p>
+        </div>
+        `
+}
+
+function checkEvo3Tempalte(evo3, img3) {
+    return `
+        <img class="arrowEvo" src="assets/img/arrow_evo.png">
+        <div class="evoChain">
+            <img src="${img3}">
+            <p>${evo3}</p>
+        </div>
+        `
+}
+
+function loadType2Template(type2) {
+    return `<img class="typeIcon" src="./assets/img/types/${type2}.svg" alt="${type2}">`
 }

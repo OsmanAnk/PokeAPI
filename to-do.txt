@@ -7,7 +7,14 @@
 - overlay überarbeiten -> DONE
 - zucht, fangrate, zucht einfügen -> DONE
 - evolution bei 2 anpassen! -> DONE
+- responsive machen -> DONE
+- code schlank machen -> DONE
+- hovereffekt -> DONE
+- Fehler bei bisasam, wenn man zurück will -> DONE
+- responsive -> schließen button -> DONE
+- templates auslagern -> DONE
 
-- responsive machen
-- code schlank machen
-- hovereffekt
+- es wird zu oft gefetcht
+- suche ab 3 buchstaben starten
+- pokemon laden, die noch nicht gefetcht wurden (nachfragen!)
+- evo2 und evo3 in eine funktion

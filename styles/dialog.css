@@ -288,6 +288,13 @@
     text-align: left;
 }
 
+.closeBtn {
+    position: fixed;
+    right: 0;
+    padding-right: 16px;
+    cursor: pointer;
+}
+
 @media (max-width: 600px) {
     .dialog {
         width: 90%;
@@ -346,5 +353,7 @@
         text-align: center;
     }
 
-
+    .closeBtn {
+        display: block;
+    }
 }
