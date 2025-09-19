@@ -5,40 +5,35 @@ async function render() {
 }
 
 let offset = 1;
-let limit = 20;
+let limit = 6;
 
 async function getPokemon(offset, limit) {
-    let pkmnMain = document.getElementById("pkmnMain");
-    let loadMore = document.getElementById("loadMore")
+    let loadMore = document.getElementById("loadMore");
     if (loadMore) {
-        loadMore.remove()
+        loadMore.remove();
     }
-    await getPokemonForResult(offset, limit, pkmnMain);
+    await getPokemonForResult(offset, limit);
 
-    pkmnMain.innerHTML += getLoadMore(offset, limit)
+    pkmnMain.innerHTML += getLoadMore(offset, limit);
 }
 
-async function getPokemonForResult(offset, limit, pkmnMain) {
+async function getPokemonForResult(offset, limit) {
+    let pkmnMain = document.getElementById("pkmnMain");
     for (let i = offset; i <= limit; i++) {
-        let responseToJson = await getURL(i);
-        let responseToJsonSpecies = await getEvoSpecies(i);
-
-        let description = responseToJsonSpecies.flavor_text_entries[0].flavor_text
-        let img = responseToJson.sprites.front_default;
-        let name = responseToJson.name;
-        let { type1, type2 } = pkmnTypes(responseToJson)
-        pkmnMain.innerHTML += loadPkmn(name, type1, type2, img, i, description);
+        await getURL(i);
+        await getEvoSpecies(i);
+        let { name, type1, type2, img, description } = pkmnDetails(i);
+        pkmnMain.innerHTML += loadPkmn(name, type1, type2, img, i, description)
     }
 }
 
-function pkmnTypes(responseToJson) {
-    type1 = responseToJson.types[0].type.name;
-    if (responseToJson.types[1] !== undefined) {
-        type2 = responseToJson.types[1].type.name;
-    } else {
-        type2 = "";
-    }
-    return { type1, type2 };
+function pkmnDetails(i) {
+    let name = pokemon[i].name;
+    let type1 = pokemon[i].type1;
+    let type2 = pokemon[i].type2;
+    let img = pokemon[i].sprite;
+    let description = species[i].description;
+    return { name, type1, type2, img, description };
 }
 
 function capitalize(capitalizeWord) {
@@ -71,7 +66,7 @@ function eventBubbling(event) {
     event.stopPropagation();
 }
 
-function showType2(type2) {
+function showType2(type2) { // noch benötigt?
     if (type2 != "") {
         return `<p class="${type2}">${type2}</p>`
     } else {
@@ -79,18 +74,9 @@ function showType2(type2) {
     }
 }
 
-function checkSecondAbility(responseToJson) {
-    if (responseToJson.abilities[1] !== undefined) {
-        return responseToJson.abilities[1].ability.name;
-    } else {
-        return "";
-    }
-}
-
 async function catchBreed(i) {
-    let responseToJson = await getEvoSpecies(i);
     let pkmnDataContent = document.getElementById("pkmnDataContent");
-    pkmnDataContent.innerHTML = getCatchBreedInfo(responseToJson);
+    pkmnDataContent.innerHTML = getCatchBreedInfo(i);
 }
 
 function checkGender(responseToJson) {
@@ -111,16 +97,12 @@ function checkEggGroup2(responseToJson) {
 }
 
 async function showBasestats(i) {
-    let responseToJson = await getURL(i);
     let pkmnDataContent = document.getElementById("pkmnDataContent");
-    pkmnDataContent.innerHTML = getBaseStats(responseToJson);
+    pkmnDataContent.innerHTML = getBaseStats(i);
 }
 
-function calcTotalStat(responseToJson) {
-    let total = 0;
-    for (let i = 0; i < 6; i++) {
-        total += responseToJson.stats[i].base_stat;
-    }
+function calcTotalStat(i) {
+    let total = pokemon[i].hp + pokemon[i].atk + pokemon[i].def + pokemon[i].spAtk + pokemon[i].spDef + pokemon[i].spd;
     return total;
 }
 
@@ -193,10 +175,8 @@ function loadType2(type2) {
 
 async function showInfo(i) {
     let showInfo = document.getElementById("showInfo");
-    let responseToJson = await getURL(i);
-
     showInfo.innerHTML = "";
-    showInfo.innerHTML = getInfo(responseToJson);
+    showInfo.innerHTML = getInfo(i);
 }
 
 async function loadMore(offset, limit) {
@@ -224,22 +204,19 @@ function previousPkmn(i) {
 }
 
 async function showOtherPkmn(i) {
-    let responseToJson = await getURL(i);
-    let responseToJsonSpecies = await getEvoSpecies(i);
-
-    let description = responseToJsonSpecies.flavor_text_entries[0].flavor_text
-    let img = responseToJson.sprites.front_default;
-    let name = responseToJson.name;
-    let { type1, type2 } = pkmnTypes(responseToJson)
-    getOtherPkmnOverlay(name, type1, type2, img, i, description)
-}
-
-async function getOtherPkmnOverlay(name, type1, type2, img, i, description) {
     let overlay = document.getElementById("overlay");
+    let { name, type1, type2, img, description } = pkmnDetails(i);
     overlay.innerHTML = getDialog(name, type1, type2, img, i, description);
     showInfo(i);
     catchBreed(i);
 }
+
+// async function getOtherPkmnOverlay(name, type1, type2, img, i, description) {
+//     let overlay = document.getElementById("overlay");
+//     overlay.innerHTML = getDialog(name, type1, type2, img, i, description);
+//     showInfo(i);
+//     catchBreed(i);
+// }
 
 
 function mySearchFunction() {
@@ -273,6 +250,23 @@ function getSearchResult(divs, filter) {
         } else {
             divs[i].style.display = "none";
         }
+    }
+}
+
+function checkType2(pkmn) {
+    if (pkmn.types[1] !== undefined) {
+        type2 = pkmn.types[1].type.name;
+    } else {
+        type2 = "";
+    }
+    return type2;
+}
+
+function checkSecondAbility(pkmn) {
+    if (pkmn.abilities[1] !== undefined) {
+        return pkmn.abilities[1].ability.name;
+    } else {
+        return "";
     }
 }
 

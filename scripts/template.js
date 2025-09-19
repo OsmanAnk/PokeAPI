@@ -54,7 +54,7 @@ function getDialog(name, type1, type2, img, i, description) {
             `
 }
 
-function getBaseStats(responseToJson) {
+function getBaseStats(i) {
     return `
         <div class="baseStats">
             <div>
@@ -67,79 +67,80 @@ function getBaseStats(responseToJson) {
                 <p>Total: </p>
             </div>
             <div>
-                <p>${responseToJson.stats[0].base_stat}</p>
-                <p>${responseToJson.stats[1].base_stat}</p>
-                <p>${responseToJson.stats[2].base_stat}</p>
-                <p>${responseToJson.stats[3].base_stat}</p>
-                <p>${responseToJson.stats[4].base_stat}</p>
-                <p>${responseToJson.stats[5].base_stat}</p>
-                <p>${calcTotalStat(responseToJson)}</p>
+                <p>${pokemon[i].hp}</p>
+                <p>${pokemon[i].atk}</p>
+                <p>${pokemon[i].def}</p>
+                <p>${pokemon[i].spAtk}</p>
+                <p>${pokemon[i].spDef}</p>
+                <p>${pokemon[i].spd}</p>
+                <p>${calcTotalStat(i)}</p>
             </div>
             <div class="baseStatBar"> 
                 <div class="statRow">
-                    <div class="statGeneral" style="width: ${responseToJson.stats[0].base_stat / 255 * 100}%"></div>
+                    <div class="statGeneral" style="width: ${pokemon[i].hp / 255 * 100}%"></div>
                 </div>
                 <div class="statRow">
-                    <div class="statGeneral" style="width: ${responseToJson.stats[1].base_stat / 190 * 100}%"></div>
+                    <div class="statGeneral" style="width: ${pokemon[i].atk / 190 * 100}%"></div>
                 </div>
                 <div class="statRow">
-                    <div class="statGeneral" style="width: ${responseToJson.stats[2].base_stat / 230 * 100}%"></div>
+                    <div class="statGeneral" style="width: ${pokemon[i].def / 230 * 100}%"></div>
                 </div>
                 <div class="statRow">
-                    <div class="statGeneral" style="width: ${responseToJson.stats[3].base_stat / 194 * 100}%"></div>
+                    <div class="statGeneral" style="width: ${pokemon[i].spAtk / 194 * 100}%"></div>
                 </div>
                 <div class="statRow">
-                    <div class="statGeneral" style="width: ${responseToJson.stats[4].base_stat / 230 * 100}%"></div>
+                    <div class="statGeneral" style="width: ${pokemon[i].spDef / 230 * 100}%"></div>
                 </div>
                 <div class="statRow">
-                    <div class="statGeneral" style="width: ${responseToJson.stats[5].base_stat / 200 * 100}%"></div>
+                    <div class="statGeneral" style="width: ${pokemon[i].spd / 200 * 100}%"></div>
                 </div>
         </div>
         `
 }
 
-function getCatchBreedInfo(responseToJson) {
+function getCatchBreedInfo(i) {
     return `
         <div class="catchBreed">
             <div class="catchBreedContainer">
                 <p class="catchBreedLabel">Catch Rate: </p>
-                <p class="catchBreedValue">${responseToJson.capture_rate}</p>
+                <p class="catchBreedValue">${species[i].capture_rate}</p>
             </div>
             <div class="catchBreedContainer">
                 <p class="catchBreedLabel">Gender Ratio: </p>
-                <p class="catchBreedValue">${checkGender(responseToJson.gender_rate)}</p>
+                <p class="catchBreedValue">${checkGender(species[i].gender_rate)}</p>
             </div>
             <div class="catchBreedContainer">
                 <p class="catchBreedLabel">Egg Groups: </p>
-                <p class="catchBreedValue cap">${responseToJson.egg_groups[0].name} ${checkEggGroup2(responseToJson)}</p>
+                <p class="catchBreedValue cap">${species[i].egg_groups[0].name} ${checkEggGroup2(species[i])}</p>
             </div>
             <div class="catchBreedContainer">
                 <p class="catchBreedLabel">Hatch Counter: </p>
-                <p class="catchBreedValue">${responseToJson.hatch_counter}</p>
+                <p class="catchBreedValue">${species[i].hatch_counter}</p>
             </div>
         </div>
         `
 }
 
-function getInfo(responseToJson) {
+function getInfo(i) {
     return `   <div class="infoList">
                 <div>
                     <p>Height</p>
-                    <p class="black">${responseToJson.height / 10} m</p>
+                    <p class="black">${pokemon[i].height / 10} m</p>
                 </div>
                 <div>
                     <p>Weight</p>
-                    <p class="black">${responseToJson.weight / 10} kg</p>
+                    <p class="black">${pokemon[i].weight / 10} kg</p>
                 </div>
                 <div>
                     <p>Base Experience</p>
-                    <p class="black">${responseToJson.base_experience}</p>
+                    <p class="black">${pokemon[i].base_experience}</p>
                 </div>
                 <div>
                     <p>Abilities</p>
                     <div>
-                    <p class="black">${capitalize(responseToJson.abilities[0].ability.name)}</p>
-                    <p class="black">${capitalize(checkSecondAbility(responseToJson))}</p>
+                    <p class="black">${capitalize(pokemon[i].ability1)}</p>
+                    <p class="black">${capitalize(pokemon[i].ability2)}</p>
+                    <p class="black">${capitalize(pokemon[i].ability3)}</p>
                     </div>
                 </div>
             </div>
